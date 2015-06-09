@@ -1,40 +1,40 @@
 z
-   loc 102
-   nom 498
-   acc 3004
-   gen 5017
-   inst 4870
-   voc 10
-   dat 288
+   nom (mianownik) 498
+   gen (dopełniacz) 5017
+   dat (celownik) 288
+   acc (biernik) 3004
+   inst (narzędnik) 4870
+   loc (miejscownik) 102
+   voc (wołacz) 10
 na
-   nom 330
-   acc 7872
-   voc 6
-   gen 2463
-   inst 138
-   loc 3214
-   dat 2005
+   nom (mianownik) 330
+   gen (dopełniacz) 2463
+   dat (celownik) 2005
+   acc (biernik) 7872
+   inst (narzędnik) 138
+   loc (miejscownik) 3214
+   voc (wołacz) 6
 za
-   nom 92
-   acc 1904
-   voc 2
-   gen 306
-   dat 16
-   loc 32
-   inst 505
+   nom (mianownik) 92
+   gen (dopełniacz) 306
+   dat (celownik) 16
+   acc (biernik) 1904
+   inst (narzędnik) 505
+   loc (miejscownik) 32
+   voc (wołacz) 2
 do
-   loc 84
-   acc 3784
-   nom 501
-   gen 5659
-   dat 286
-   voc 5
-   inst 125
+   nom (mianownik) 501
+   gen (dopełniacz) 5659
+   dat (celownik) 286
+   acc (biernik) 3784
+   inst (narzędnik) 125
+   loc (miejscownik) 84
+   voc (wołacz) 5
 bez
-   loc 2
-   nom 11
-   acc 149
-   gen 248
-   dat 9
-   voc 1
-   inst 1
+   nom (mianownik) 11
+   gen (dopełniacz) 248
+   dat (celownik) 9
+   acc (biernik) 149
+   inst (narzędnik) 1
+   loc (miejscownik) 2
+   voc (wołacz) 1
