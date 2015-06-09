@@ -21,19 +21,32 @@ def normalize_text(text):
     return text.split()
 
 
-def analyze(word):
-    echo_words = subprocess.Popen(['echo', word], stdout=subprocess.PIPE)
-    analysis = subprocess.check_output(['java', '-jar', jar_path, 'plstem'], stdin=echo_words.stdout, stderr=subprocess.DEVNULL)
-    echo_words.wait()
-    forms = analysis.decode('utf-8').split('\n')[:-2]
-    return [form.split()[2].split(':') for form in forms]
+def analyze(words):
+    process = subprocess.Popen(['java', '-jar', jar_path, 'plstem'],
+                               stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+                               stderr=subprocess.PIPE)
+    stdout, _ = process.communicate(' '.join(words).encode('utf-8'))
+
+    result = dict()
+    forms = stdout.decode('utf-8').split('\n')[:-2]
+    for form in forms:
+        try:
+            if form.split()[2].split(':') in result[form.split()[0]]:
+                result[form.split()[0]] = result[form.split()[0]] + [form.split()[2].split(':')]
+        except KeyError:
+            result[form.split()[0]] = [form.split()[2].split(':')]
+
+    return result
 
 
-def get_noun(words):
+def get_noun(words, whole_analysis):
     for word in words:
-        for analysis in analyze(word):
-            if analysis[0] == 'subst':
-                return analysis
+        try:
+            for analysis in whole_analysis[word]:
+                if analysis[0] == 'subst':
+                    return analysis
+        except KeyError:
+            pass
     return None
 
 # read pap
@@ -41,13 +54,17 @@ with open("data/pap.txt") as file:
     text = file.read()
 notice_text = re.split(r'#.*', text)
 notice_words = [normalize_text(x) for x in notice_text]
+big_notice = [word for notice in notice_words for word in notice][:1000000]
+print(str(0) + '/' + str(len(big_notice)))
+whole_analysis = analyze(big_notice)
 
-for notice in notice_words:
-    for i in range(len(notice)):
-        if notice[i] in chosen_prepositions:
-            analysis = get_noun(notice[i + 1: i + i + N])
-            if analysis:
-                stats[notice[i]][analysis[2]] += 1
+for i in range(len(big_notice)):
+    if i % 1000 == 0:
+        print(str(i) + '/' + str(len(big_notice)))
+    if big_notice[i] in chosen_prepositions:
+        analysis = get_noun(big_notice[i + 1: i + 1 + N], whole_analysis)
+        if analysis:
+            stats[big_notice[i]][analysis[2]] += 1
 
 for elem in chosen_prepositions:
     print(elem)
