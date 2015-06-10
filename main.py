@@ -43,7 +43,7 @@ def get_noun(words, whole_analysis):
     for word in words:
         try:
             for analysis in whole_analysis[word]:
-                if analysis[0] == 'subst':
+                if analysis[0] in ['subst', 'adj', 'ppas']:
                     return analysis
         except KeyError:
             pass
@@ -54,7 +54,7 @@ with open("data/pap.txt") as file:
     text = file.read()
 notice_text = re.split(r'#.*', text)
 notice_words = [normalize_text(x) for x in notice_text]
-big_notice = [word for notice in notice_words for word in notice][:1000000]
+big_notice = [word for notice in notice_words for word in notice][:500000]
 print(str(0) + '/' + str(len(big_notice)))
 whole_analysis = analyze(big_notice)
 
@@ -69,7 +69,8 @@ for i in range(len(big_notice)):
 for elem in chosen_prepositions:
     print(elem)
     for type in stats[elem].keys():
-        print('   ' + type + ' ' + str(stats[elem][type]))
+        if '.' not in type:
+            print('   ' + type + ' ' + str(stats[elem][type]))
 
 
 
